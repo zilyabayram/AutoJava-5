@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import util.DataGenerator;
+import util.RegistrationInfo;
 
 import java.time.Duration;
 
@@ -22,18 +23,18 @@ public class CardDeliveryTest {
     @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
 
-        DataGenerator.UserInfo validUser = DataGenerator.Registration.generateUser("ru");
+        RegistrationInfo registrationInfo = DataGenerator.Registration.generateInfo("ru");
         var daysToAddForFirstMeeting = 4;
         var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
         var daysToAddForSecondMeeting = 7;
         var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
 
-        $("[placeholder='Город']").setValue(validUser.getCity());
+        $("[placeholder='Город']").setValue(registrationInfo.getCity());
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.DELETE);
         $("[data-test-id='date'] input").setValue(firstMeetingDate);
         $("[data-test-id='date'] input").sendKeys(Keys.ENTER);
-        $("[name='name']").setValue(validUser.getName());
-        $("[name='phone']").setValue(validUser.getPhone());
+        $("[name='name']").setValue(registrationInfo.getName());
+        $("[name='phone']").setValue(registrationInfo.getPhone());
         $("[class='checkbox__box']").click();
         $("[class='button__content']").click();
         $((withText("Успешно!"))).should(visible, Duration.ofSeconds(15));
